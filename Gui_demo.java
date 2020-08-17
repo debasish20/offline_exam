@@ -91,10 +91,10 @@ public class Gui_demo {
 		frame.getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("WELCOME TO DEBASISH'S  EXAM SYSTEM");
-		lblNewLabel_1.setForeground(Color.RED);
+		lblNewLabel_1.setForeground(new Color(0, 128, 128));
 		lblNewLabel_1.setFont(new Font("Viner Hand ITC", Font.BOLD | Font.ITALIC, 18));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(63, 36, 499, 53);
+		lblNewLabel_1.setBounds(96, 36, 466, 53);
 		frame.getContentPane().add(lblNewLabel_1);
 		
 		

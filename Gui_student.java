@@ -31,13 +31,22 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.sql.*;
 import java.io.*;
-public class Gui_student {
+import javax.swing.JPasswordField;
+import javax.swing.JCheckBox;
+import javax.swing.JRadioButton;
+public class Gui_student{
 
 	public JFrame frame;
-	public JTextField textField;
 	public JTextField textField_1;
 	private JTextField textField_2;
-
+	public static String pass;
+	public static String an1;
+	private JPasswordField passwordField;
+	public static String q="";
+	public static int ctr=0;
+	public static String subCode;
+	public static String roll;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -78,27 +87,21 @@ public class Gui_student {
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @return 
 	 */
-	private void initialize() {
+	public void initialize() {
 		
  		
 		frame = new JFrame();
-		frame.getContentPane().setBackground(new Color(255, 228, 225));
-		frame.getContentPane().setForeground(Color.PINK);
-		frame.setBounds(100, 100, 620, 451);
+		frame.getContentPane().setBackground(new Color(127, 255, 212));
+		frame.getContentPane().setForeground(new Color(135, 206, 250));
+		frame.setBounds(100, 100, 736, 533);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		
-		textField = new JTextField();
-		textField.setBackground(Color.WHITE);
-		textField.setBounds(317, 79, 96, 20);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
-		
 		JLabel lblNewLabel = new JLabel("enter password");
 		lblNewLabel.setBackground(Color.YELLOW);
-		lblNewLabel.setBounds(151, 82, 103, 14);
+		lblNewLabel.setBounds(151, 57, 103, 14);
 		frame.getContentPane().add(lblNewLabel);
 		
 		textField_1 = new JTextField();
@@ -111,7 +114,11 @@ public class Gui_student {
 		frame.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
 		
-		String subCode=textField_2.getText();
+		passwordField = new JPasswordField();
+		passwordField.setBounds(318, 54, 95, 20);
+		frame.getContentPane().add(passwordField);
+		
+		
 		
 		JLabel lblNewLabel_1 = new JLabel("enter roll no.");
 		lblNewLabel_1.setBounds(151, 137, 124, 14);
@@ -120,126 +127,14 @@ public class Gui_student {
 		JButton btnNewButton = new JButton("YES");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Gui_student ob=new Gui_student();
 				
-				String[] q1=new String[10];
-			     String[] an=new String[10]; 
-			     String loc=textField_1.getText();
-			     
-	        		
-				String ps1=textField.getText();
-				if(!ps1.equals(Gui_input.ps))
-				{
-					JOptionPane.showMessageDialog(null,"Wrong Password");
-					
-				}
-				
-				 	
-					int	t =Integer.parseInt(Gui_input.textField_1.getText());
-					
-				 	System.out.println(t);
-							    
-				    LocalTime time=java.time.LocalTime.now();
-				    int h=time.getHour();
-				      
-				      int i=0;
-				     
-				      Scanner sc=new Scanner(System.in);
-				      File file = new File(loc+".txt");
-				        try {
-							file.createNewFile();
-						} catch (IOException e3) {
-							// TODO Auto-generated catch block
-							e3.printStackTrace();
-						}
-				        FileWriter writer = null;
-						try {
-							writer = new FileWriter(file);
-						} catch (IOException e2) {
-							// TODO Auto-generated catch block
-							e2.printStackTrace();
-						}
-
-				        
-				      
-			 if(ps1.equals(Gui_input.ps)) {
-				 
-				    int m1=time.getMinute();
-				    int m=time.getMinute();
-				    System.out.println("Your test has started at "+LocalDateTime.now().getHour()+":"+LocalDateTime.now().getMinute()+":"+LocalDateTime.now().getSecond());
-				    
-					File file1 = new File("C:\\sample.txt ");					
-					  
-					
-					  BufferedReader br1 = null;
-					try {
-						br1 = new BufferedReader(new FileReader(file1));
-					} catch (FileNotFoundException e1) {
-						
-						e1.printStackTrace();
-					}
-					
-					System.out.println("Enter the answers for the respective questions:");
-					  
-					  String st; 
-					  try {
-						writer.write("The answers given by the student are displayed below:\n\n\n");
-					} catch (IOException e2) {
-						// TODO Auto-generated catch block
-						e2.printStackTrace();
-					}
-					  System.out.println("\n You have "+ t +" min(s) to take the test \n");
-					  
-					  //object for jdbc
-					  Gui_student ob=new Gui_student();
-					  String ans="";
-					  
-					  try {
-						while (((st = br1.readLine()) != null))
-						  {  
+				subCode=textField_2.getText();
+				roll=textField_1.getText();
+				pass=passwordField.getText();
+				ob.getQuest(subCode,pass,roll);
 												
-							  System.out.println(st);
-							  an[i]=sc.nextLine();
-							  ans=ans+"\n"+an[i];
-							  writer.write("("+(i+1)+")  "+ an[i]+"\n\n");	
-							  i++;
-							  m=LocalDateTime.now().getMinute();
-							  if(m==59) {
-								  m=0;
-								  m1=0;
-							  }
-							  if(m==(m1+t))
-							  {
-								  
-							      System.out.println("\n SORRY!!!! TIMES OUT !!! \n");
-							      System.exit(0);
-								  break;
-							  }
-							    
-							 
-							   
-						  }
-						ob.insert(subCode, loc, ans);
-						writer.flush();
-				        writer.close();
-						int j=i;
-						i=0;
-						
-						System.out.println("\n\n Your answers are: \n");
-						for(i=0;i<j;i++)
-						{
-							System.out.println(an[i]);
-						}
-					} catch (IOException e1) {
-						
-						e1.printStackTrace();
-					}				          
-					  
-				    }
-			     
-			}
-			
-			
-			
+			}			
 		});
 		btnNewButton.setBounds(186, 327, 89, 23);
 		frame.getContentPane().add(btnNewButton);
@@ -265,10 +160,13 @@ public class Gui_student {
 		frame.getContentPane().add(lblNewLabel_3);
 		
 		
+		
 	}
 	
-	public void insert(String subCode, String roll, String ans) {
-		Gui_input ob=new Gui_input();
+	//setting answers
+	
+	public void insert(String subCode, String roll, String an) {
+		
 		
 		String sql = "INSERT INTO students(subCode, roll, answer) VALUES(?,?,?)";
 
@@ -276,10 +174,92 @@ public class Gui_student {
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, subCode);
             pstmt.setString(2, roll);
-            pstmt.setString(3, ans);
+            pstmt.setString(3, an);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-    }
+        System.exit(0);
+	    }
+    
+	
+	//getting questions
+	
+	public void getQuest(String subCode, String pass1, String roll){
+		String sql1 = "SELECT password "
+	               + "FROM teachers WHERE subCode = ?";
+		
+	    String sql = "SELECT questions "
+	               + "FROM questions WHERE subCode = ?";
+	    
+	    Gui_input ob3=new Gui_input();
+	    Scanner sc=new Scanner(System.in);
+	    int t=2;
+	   
+	    System.out.println("Your test has started at "+LocalDateTime.now().getHour()+":"+LocalDateTime.now().getMinute()+":"+LocalDateTime.now().getSecond());
+	    
+	       
+	    try {
+			Connection conn = this.connect();
+			  PreparedStatement pstmt1  = conn.prepareStatement(sql1);
+			  
+			// set the value
+				 pstmt1.setString(1,subCode);
+				 //
+				 ResultSet rs1  = pstmt1.executeQuery();
+				 
+				 // loop through the result set
+				 while (rs1.next()) {
+				    String pass= rs1.getString("password");
+				 } 
+			  
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	    
+	if(pass.equals(pass1))
+	{
+
+	try (Connection conn = this.connect();
+	  PreparedStatement pstmt  = conn.prepareStatement(sql)){
+	 
+	 // set the value
+	 pstmt.setString(1,subCode);
+	 //
+	 ResultSet rs  = pstmt.executeQuery();
+	 
+	 
+	 int i=0;
+	// System.out.println("\n Enter the answers for the following questions:\n You have "+t+" mins to take the test\n");
+	 //System.out.println("!!! All the best !!!\n ");
+	 // loop through the result set
+	 while (rs.next()) {
+		 q=rs.getString("questions");
+	     i++;
+	    break;
+	 }	 
+	 
+	// System.out.println("\n    THANK YOU FOR ATTEMPTING THIS QUIZ  \n");
+	
+	 //System.out.println(ans);
+	} catch (SQLException e) {
+	 System.out.println(e.getMessage());
+	}
+	Gui_student ob1=new Gui_student();
+	questAns ob2=new questAns();
+	
+	ob2.quest();	
+	String an = null;
+	//an=questAns.ans;	
+	System.out.println(an);
+	//ob1.insert(subCode, roll, an);
+	}
+	
+	else
+	{
+		JOptionPane.showMessageDialog(null,"Wrong Password");
+	}
+	
+}
 }
